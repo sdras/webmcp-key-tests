@@ -49,10 +49,6 @@ enough. The short version, measured in Chrome 152 on 2026-09-06:
   place. Every description or schema change is an unregister plus a register,
   which fires two `toolchange` events and, in Chrome 152, loses any call in
   flight.
-- **The hook is the right shape, with two bugs.** `use-webmcp-tool` handles
-  dynamic names, descriptions and per-item tools, but ignores the promise
-  `registerTool` returns, so it reports `registered` on a name collision and
-  leaks an unhandled `AbortError` per tool on every StrictMode mount.
 
 The page has a "measure this browser" button so the numbers can be
 re-checked on any build: it runs identity probes against
