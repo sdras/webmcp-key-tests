@@ -54,11 +54,10 @@ enough. The short version, measured in Chrome 152 on 2026-09-06:
   `registerTool` returns, so it reports `registered` on a name collision and
   leaks an unhandled `AbortError` per tool on every StrictMode mount.
 
-The page has two "measure this browser" buttons so the numbers can be
-re-checked on any build: one runs identity probes against
-`document.modelContext` (`src/analysis/nativeProbes.js`), the other mounts
-real `useWebMCP` components through seven dynamic-key scenarios
-(`src/analysis/hookProbes.jsx`). Both clean up after themselves.
+The page has a "measure this browser" button so the numbers can be
+re-checked on any build: it runs identity probes against
+`document.modelContext` (`src/analysis/nativeProbes.js`) and cleans up after
+itself.
 
 ## Run it
 

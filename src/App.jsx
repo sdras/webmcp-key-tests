@@ -8,12 +8,12 @@ import { DemoPage } from "./pages/Demo.jsx";
 const PAGES = {
   demo: {
     label: "Demo",
-    title: "Keys keep React, and agents, in sync",
-    blurb: <>Three demos: keys on a simple list, keys on a dynamic list, and WebMCP tools driving that dynamic list.</>,
+    title: "How keys work in React and with WebMCP",
+    blurb: <>Three demos: keys on a simple list, keys on a dynamic list, and WebMCP tools driving that dynamic list. See analysis for a breakdown and recommendations.</>,
     nav: [
-      ["#simple", "Simple"],
-      ["#dynamic", "Dynamic"],
-      ["#webmcp", "WebMCP"],
+      ["#simple", "Simple", "A simple list, with and without keys"],
+      ["#dynamic", "Dynamic", "Dynamic lists need keys minted at creation"],
+      ["#webmcp", "WebMCP", "WebMCP tools driving the dynamic list"],
     ],
     Page: DemoPage,
   },
@@ -27,19 +27,15 @@ const PAGES = {
       </>
     ),
     nav: [
-      ["#answer", "Answer"],
-      ["#native", "Native API"],
-      ["#hook", "Hook"],
-      ["#takeaways", "Takeaways"],
+      ["#answer", "Answer", "The short answer"],
+      ["#native", "Native API", "What the native API does with identity"],
+      ["#takeaways", "Takeaways", "What follows"],
     ],
     Page: AnalysisPage,
   },
 };
 
 const PAGE_TABS = Object.entries(PAGES).map(([key, { label }]) => ({ key, label }));
-
-// Section numbers read "01", "02"… both in this nav and on the headings.
-const pad = (n) => String(n).padStart(2, "0");
 
 // `?page=analysis` opens the analysis tab directly, so either tab is linkable.
 function pageFromUrl() {
@@ -60,9 +56,6 @@ export function App() {
   const [page, setPage] = useState(pageFromUrl);
   const { title, blurb, nav, Page } = PAGES[page];
 
-  const pill = !mcp.supported ? "none" : mcp.source;
-  const pillText = !mcp.supported ? "WebMCP: not detected" : mcp.source === "shim" ? "WebMCP: simulator" : "WebMCP: native";
-
   const switchTo = (next) => {
     if (next === page) return;
     setPage(next);
@@ -74,22 +67,24 @@ export function App() {
     <>
       <div className="topbar">
         <div className="topbar-in">
-          <span className="wordmark">react-keys × webmcp</span>
+          <span className="wordmark">React keys × WebMCP</span>
           <TabList className="page-tabs" idBase="page" label="Pages" tabs={PAGE_TABS} selected={page} onSelect={switchTo} />
-          <span className={`pill ${pill}`} role="status">
-            {pillText}
-          </span>
         </div>
       </div>
 
       <header className="hero">
-        <h1>{title}</h1>
-        <p className="blurb">{blurb}</p>
+        <div className="hero-text">
+          <h1>{title}</h1>
+          <p className="blurb">{blurb}</p>
+        </div>
+        {/* A contents list: the short name links to the section, the full
+            heading beside it says what the visitor will find there. */}
         <nav className="section-nav" aria-label="Sections">
-          {nav.map(([href, label], index) => (
+          <span className="section-nav-label">On this page</span>
+          {nav.map(([href, label, heading]) => (
             <a key={href} href={href}>
-              <span className="num">{pad(index + 1)}</span>
-              {label}
+              <span className="section-nav-name">{label}</span>
+              <span className="section-nav-title">{heading}</span>
             </a>
           ))}
         </nav>

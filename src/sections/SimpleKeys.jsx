@@ -13,14 +13,14 @@ export function SimpleKeys() {
 
   return (
     <section id="simple" className="demo">
-      <h2>
-        <span className="num">01</span> A simple list, with and without keys
-      </h2>
-      <p className="lede">
-        Both columns render the <em>same array</em>. Type a note in a row and star it, then change the
-        list. React decides which DOM nodes and component state to keep by matching children on their{" "}
-        <code>key</code>. With no key it falls back to position.
-      </p>
+      <div className="section-head">
+        <h2>A simple list, with and without keys</h2>
+        <p className="lede">
+          Both columns render the <em>same array</em>. Type a note in a row and star it, then change the
+          list. React tracks which DOM nodes and component state to keep by matching children on their{" "}
+          <code>key</code>. With no key it falls back to position.
+        </p>
+      </div>
 
       <div className="controls">
         <button className="primary" onClick={() => setItems((prev) => [makeItem(nextText()), ...prev])}>
@@ -48,8 +48,8 @@ export function SimpleKeys() {
         <ul>
           <li>
             <strong>No key:</strong> after “Add to top”, your note and star stay in the <em>first slot</em>,
-            now next to the wrong item. The new row flashes at the bottom, because React reused every
-            existing node in place and appended one.
+            now next to the wrong item. The new row flashes at the bottom, because React reused 
+            existing nodes in place and appended one.
           </li>
           <li>
             <strong>Stable key:</strong> the note and star travel with their item. Only the new row flashes.

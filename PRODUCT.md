@@ -47,8 +47,9 @@ credibility the page trades on.
 ## Operating Context
 
 - Opened from a GitHub issue thread, usually in Chrome with
-  `chrome://flags/#enable-webmcp-testing` and the WebMCP extension. The status
-  pill in the header reports native / simulator / not detected.
+  `chrome://flags/#enable-webmcp-testing` and the WebMCP extension. A status
+  line in the WebMCP section, and on the Analysis tab, reports native /
+  simulator / not detected.
 - Visitors without the flag can install an in-page simulator
   (`src/lib/modelContextShim.js`, or `?sim`). The simulator deliberately
   differs from Chrome (returns `undefined` from `registerTool`, replaces
@@ -77,9 +78,7 @@ Confirmed functionality:
   switches the list to index keys so an agent's correct edit still desyncs
   the UI. An in-page "Agent console" calls any registered tool with JSON.
 - Analysis tab: the written answer, a native-API probe runner
-  (`src/analysis/nativeProbes.js`), a hook probe runner across seven
-  dynamic-key scenarios (`src/analysis/hookProbes.jsx`), a spec-issue list,
-  and takeaways.
+  (`src/analysis/nativeProbes.js`), a spec-issue list, and takeaways.
 
 Hard constraint (confirmed):
 
@@ -116,7 +115,7 @@ a constraint.
 - Measured findings in Chrome 152 on 2026-09-06 against the native API, with
   the probe code that produced them in `src/analysis/`. Both runners re-check
   the numbers on any build.
-- Spec issue references in `src/pages/Analysis.jsx`: #234, #167, #262, #300,
+- Spec issue references in `src/pages/Analysis.jsx`: #234, #167, #199, #262, #300,
   #218 (closed by PR #248, 2026-08-19), #101.
 - Two independent registration implementations that reproduce the same
   behaviour: `src/webmcp/HookTools.jsx` and `src/webmcp/ImperativeTools.jsx`.

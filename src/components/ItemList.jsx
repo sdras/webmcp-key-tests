@@ -1,10 +1,10 @@
 import { Row } from "./Row.jsx";
 
 const LABELS = {
-  none: { tag: "no key", code: "<Row item={item} />" },
-  index: { tag: "index key", code: "<Row key={index} item={item} />" },
-  random: { tag: "random key", code: "<Row key={Math.random()} item={item} />" },
-  id: { tag: "stable key", code: "<Row key={item.id} item={item} />" },
+  none: { tag: "No key", code: "<Row item={item} />" },
+  index: { tag: "Index key", code: "<Row key={index} item={item} />" },
+  random: { tag: "Random key", code: "<Row key={Math.random()} item={item} />" },
+  id: { tag: "Stable key", code: "<Row key={item.id} item={item} />" },
 };
 
 // Renders the same items four different ways. Only the `key` differs.

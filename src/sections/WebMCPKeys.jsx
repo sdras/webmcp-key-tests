@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { ItemList } from "../components/ItemList.jsx";
+import { Alert, Check, Cross } from "../components/icons.jsx";
 import { TabList, tabPanelProps } from "../components/TabList.jsx";
 import { initialItems } from "../lib/items.js";
 import { AgentConsole } from "../webmcp/AgentConsole.jsx";
@@ -24,7 +25,7 @@ function McpStatus({ mcp, onInstallShim }) {
   if (!mcp.supported) {
     return (
       <div className="status none">
-        <span className="dot" />
+        <Cross />
         <span>
           <code>document.modelContext</code> not found. Install the{" "}
           <a href={EXTENSION_URL} target="_blank" rel="noopener">
@@ -41,7 +42,7 @@ function McpStatus({ mcp, onInstallShim }) {
   if (mcp.source === "shim") {
     return (
       <div className="status shim">
-        <span className="dot" />
+        <Alert />
         <span>
           In-page simulator active: tools register on a shimmed <code>document.modelContext</code>. For a
           real agent, install the{" "}
@@ -55,7 +56,7 @@ function McpStatus({ mcp, onInstallShim }) {
   }
   return (
     <div className="status native">
-      <span className="dot" />
+      <Check />
       <span>
         <code>document.modelContext</code> is live. The tools below are visible to your agent.
       </span>
@@ -77,14 +78,14 @@ export function WebMCPKeys({ mcp, onInstallShim }) {
 
   return (
     <section id="webmcp" className="demo">
-      <h2>
-        <span className="num">03</span> WebMCP tools driving the dynamic list
-      </h2>
-      <p className="lede">
-        An agent shouldn’t scrape this list, it should call tools. Every tool here addresses an item by the{" "}
-        <em>same id React uses as the key</em>, so React, your state and the agent all agree on which item
-        is which. Type a note in a row, then have the agent add, move, rename or remove items around it.
-      </p>
+      <div className="section-head">
+        <h2>WebMCP tools driving the dynamic list</h2>
+        <p className="lede">
+          Every tool here addresses an item by the{" "}
+          <em>same id React uses as the key</em>, so React, your state and the agent all agree on which item
+          is which. Type a note in a row, then have the agent add, move, rename or remove items around it.
+        </p>
+      </div>
 
       <McpStatus mcp={mcp} onInstallShim={onInstallShim} />
 
@@ -132,19 +133,14 @@ export function WebMCPKeys({ mcp, onInstallShim }) {
         </div>
         <ul>
           <li>
-            <strong>Ids, not positions.</strong> <code>list-items</code> returns both an <code>id</code> and an{" "}
-            <code>index</code>, but every mutating tool takes only the id. A position is stale the moment
-            anything moves, including moves the agent itself just made.
+            <strong>Target IDs, never array positions.</strong> <code>list-items</code> returns both an <code>id</code> and an{" "}
+            <code>index</code>, but every mutating tool takes only the id. Index paths become invalid the moment any item shifts, including from actions the agent just executed.
           </li>
           <li>
-            <strong>Same bug, different trigger.</strong> Tick “Break it”, type a note in the first row, and
-            have the agent remove that item. The agent did exactly the right thing, and the UI is still out
-            of sync, because the DOM followed positions instead of the data.
+            <strong>Same root cause, different trigger.</strong> Toggle "Break it", add a note to row one, then have the agent delete that row. Even though the agent sends the correct payload, the UI breaks state because the DOM bound to positional indexes rather than stable IDs.
           </li>
           <li>
-            <strong>Lifecycle.</strong> Switching tabs unmounts one implementation and mounts the other. The
-            first one’s tools unregister (its abort signal fires) and the second one’s register. The hook
-            does this for you; the imperative version spells it out.
+            <strong>Lifecycle & cleanup.</strong> Switching tabs unmounts the active implementation and mounts the new one. The initial toolset unregisters via its AbortSignal, and the new toolset registers. The custom hook abstracts this automatically, whereas the imperative approach handles the teardown and setup manually.
           </li>
         </ul>
       </div>

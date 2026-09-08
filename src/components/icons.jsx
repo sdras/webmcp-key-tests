@@ -24,6 +24,13 @@ export const Cross = (props) => (
   </svg>
 );
 
+export const Alert = (props) => (
+  <svg {...base} {...props}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 8v4M12 16h.01" />
+  </svg>
+);
+
 export const Star = ({ filled = false, ...props }) => (
   <svg {...base} width={16} height={16} fill={filled ? "currentColor" : "none"} {...props}>
     <path d="M12 3l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.8 6.1 21l1.2-6.5L2.5 9.9l6.6-.9z" />

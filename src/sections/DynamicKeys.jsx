@@ -34,14 +34,13 @@ export function DynamicKeys() {
 
   return (
     <section id="dynamic" className="demo">
-      <h2>
-        <span className="num">02</span> Dynamic lists need keys minted at creation
-      </h2>
-      <p className="lede">
-        Here items arrive at runtime. Each one gets an id <em>when it is created</em>, and that id lives on
-        the item. Two tempting shortcuts fail: the array index, which changes when the list changes, and a
-        random key generated in render, which changes on every render even when nothing else did.
-      </p>
+      <div className="section-head">
+        <h2>Dynamic lists need keys added at creation</h2>
+        <p className="lede">
+          Items arrive at runtime. Each one gets an id <em>when it is created</em>, and that id lives on
+          the item. The ids are either index, random, or stable. The stable id is the only one that survives moves, shuffles and re-renders.
+        </p>
+      </div>
 
       <div className="controls">
         <button className="primary" onClick={() => setItems((prev) => [makeItem(nextText()), ...prev])}>
@@ -73,7 +72,7 @@ export function DynamicKeys() {
       <div className="columns three">
         <ItemList title="by position" tone="bad" items={items} keyBy="index" />
         <ItemList title="new every render" tone="bad" items={items} keyBy="random" />
-        <ItemList title="minted at creation" tone="good" items={items} keyBy="id" />
+        <ItemList title="added at creation" tone="good" items={items} keyBy="id" />
       </div>
 
       <div className="callout">
@@ -89,7 +88,7 @@ export function DynamicKeys() {
           <li>
             <strong>Random key:</strong> “Re-render parent only” changes nothing in the data, yet every row
             flashes, every note and star is gone, and every timer restarts. That column is torn down and
-            rebuilt on each render. Turn on the live feed and it never settles.
+            rebuilt on each render.
           </li>
           <li>
             <strong>Id key:</strong> only genuinely new rows flash. Notes, stars and timers stay with their
